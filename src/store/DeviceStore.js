@@ -5,6 +5,8 @@ export default class DeviceStore {
     this._types = [
       { id: 1, name: "Refregerators" },
       { id: 2, name: "Laptops" },
+      { id: 3, name: "TV-Set" },
+      { id: 4, name: "Smartphones" },
     ];
     this._brands = [
       { id: 1, name: "Sumsung" },
@@ -26,6 +28,7 @@ export default class DeviceStore {
         img: "https://content2.rozetka.com.ua/goods/images/big/364929635.jpg",
       },
     ];
+    this._selectedType = {};
     makeAutoObservable(this); //mobx слідкує за ціми змінними
   }
 
@@ -41,6 +44,10 @@ export default class DeviceStore {
     this._devices = devices;
   }
 
+  setSelectedType(type) {
+    this._selectedType = type;
+  }
+
   get types() {
     return this._types;
   }
@@ -51,5 +58,9 @@ export default class DeviceStore {
 
   get devices() {
     return this._devices;
+  }
+
+  get selectedType() {
+    return this._selectedType;
   }
 }
