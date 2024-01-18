@@ -6,15 +6,13 @@ import { Context } from "..";
 const BrandBar = observer(() => {
   const { device } = useContext(Context);
   return (
-    <Col style={{ display: "flex" }}>
+    <Col style={{ display: "flex", flexWrap: "wrap" }}>
       {device.brands.map((brand) => (
         <Card
           key={brand.id}
-          style={{ margin: 10 }}
+          style={{ margin: 10, padding: 7, cursor: "pointer" }}
           onClick={() => device.setSelectedBrand(brand)}
-          background-color={
-            brand.id === device.selectedBrand.id ? "#0d6efd" : "light"
-          }
+          bg={brand.id === device.selectedBrand.id ? "primary" : "light"}
         >
           {brand.name}
         </Card>
