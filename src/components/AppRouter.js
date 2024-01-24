@@ -2,15 +2,16 @@ import React, { useContext } from "react";
 import { Route, Routes, Navigate, Outlet } from "react-router-dom";
 import { authRoutes, publicRoutes } from "../routes";
 import { SHOP_ROUTE } from "../utils/consts";
-import { Context } from "..";
+import { Context } from "../index";
+import { observer } from "mobx-react-lite";
 
-const AppRouter = () => {
+const AppRouter = observer(() => {
   const { user } = useContext(Context);
   // console.log(user);
   return (
     <div>
       <Routes>
-        {user.isAuth === true &&
+        {user.isAuth &&
           authRoutes.map(({ path, Component }) => (
             <Route key={path} path={path} element={<Component />} />
           ))}
@@ -22,6 +23,6 @@ const AppRouter = () => {
       <Outlet />
     </div>
   );
-};
+});
 
 export default AppRouter;
