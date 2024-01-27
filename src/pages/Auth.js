@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Button, Card, Col, Container, Form } from "react-bootstrap";
-import { NavLink } from "react-router-dom";
-import { REGISTER_ROUTE, LOGIN_ROUTE } from "../utils/consts";
+import { NavLink, useNavigate } from "react-router-dom";
+import { REGISTER_ROUTE, LOGIN_ROUTE, SHOP_ROUTE } from "../utils/consts";
 import { useLocation } from "react-router-dom";
 import { login, register } from "../http/userAPI";
 import { observer } from "mobx-react-lite";
@@ -10,20 +10,25 @@ import { Context } from "../index";
 const Auth = observer(() => {
   const { user } = useContext(Context);
   const location = useLocation();
+  const navigate = useNavigate();
   const isLogin = location.pathname === LOGIN_ROUTE;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   // console.log(location);
 
   const click = async () => {
-    let data;
-    if (isLogin) {
-      const data = await login(email, password);
-    } else {
-      const data = await register(email, password);
+    try {
+      if (isLogin) {
+        await login(email, password);
+      } else {
+        await register(email, password);
+      }
+      user.setUser(user);
+      user.setIsAuth(true);
+      navigate(SHOP_ROUTE);
+    } catch (err) {
+      alert(err.response.data.message);
     }
-    user.setUser(user);
-    user.setIsAuth(true);
   };
 
   return (
