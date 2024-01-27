@@ -1,13 +1,31 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { Button, Card, Col, Container, Form } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 import { REGISTER_ROUTE, LOGIN_ROUTE } from "../utils/consts";
 import { useLocation } from "react-router-dom";
+import { login, register } from "../http/userAPI";
+import { observer } from "mobx-react-lite";
+import { Context } from "../index";
 
-const Auth = () => {
+const Auth = observer(() => {
+  const { user } = useContext(Context);
   const location = useLocation();
   const isLogin = location.pathname === LOGIN_ROUTE;
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   // console.log(location);
+
+  const click = async () => {
+    let data;
+    if (isLogin) {
+      const data = await login(email, password);
+    } else {
+      const data = await register(email, password);
+    }
+    user.setUser(user);
+    user.setIsAuth(true);
+  };
+
   return (
     <Container
       style={{
@@ -26,10 +44,15 @@ const Auth = () => {
           <Form.Control
             style={{ marginTop: 10 }}
             placeholder="Введіть Ваш email..."
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
           <Form.Control
             style={{ marginTop: 10 }}
             placeholder="Введіть Ваш пароль..."
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
           />
 
           <Col
@@ -52,7 +75,11 @@ const Auth = () => {
               </div>
             )}
 
-            <Button style={{ marginTop: 10 }} variant={"outline-success"}>
+            <Button
+              onClick={click}
+              style={{ marginTop: 10 }}
+              variant={"outline-success"}
+            >
               {isLogin ? "Увійти" : "Зареєструйся"}
             </Button>
           </Col>
@@ -60,6 +87,6 @@ const Auth = () => {
       </Card>
     </Container>
   );
-};
+});
 
 export default Auth;
