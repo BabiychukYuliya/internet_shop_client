@@ -5,14 +5,16 @@ import DeviceList from "../components/DeviceList";
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "..";
-import { fetchType } from "../http/deviceAPI";
+import { fetchBrands, fetchDevices, fetchTypes } from "../http/deviceAPI";
 
 const Shop = observer(() => {
   const { device } = useContext(Context);
 
   useEffect(() => {
-    fetchType().then((data) => device.setTypes(data));
-  }, []);
+    fetchTypes().then((data) => device.setTypes(data));
+    fetchBrands().then((data) => device.setBrands(data));
+    fetchDevices().then((data) => device.setDevice(data.rows));
+  }, [device]);
 
   return (
     <Container>
