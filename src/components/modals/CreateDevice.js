@@ -4,6 +4,11 @@ import { Context } from "../../index";
 
 const CreateDevice = ({ show, onHide }) => {
   const { device } = useContext(Context);
+  const [name, setName] = useState("");
+  const [price, setPrice] = useState(0);
+  const [file, setFile] = useState(null);
+  const [brand, setBrand] = useState(null);
+  const [type, setType] = useState(null);
   const [info, setInfo] = useState([]); //масив характеристик для пристрою
 
   const addInfo = () => {
@@ -12,6 +17,10 @@ const CreateDevice = ({ show, onHide }) => {
 
   const removeInfo = (number) => {
     setInfo(info.filter((i) => i.number !== number));
+  };
+
+  const selectFile = (e) => {
+    selectFile(e.target.files[0]);
   };
 
   return (
@@ -57,7 +66,11 @@ const CreateDevice = ({ show, onHide }) => {
             type="number"
             style={{ marginTop: 10 }}
           />
-          <Form.Control type="file" style={{ marginTop: 10 }} />
+          <Form.Control
+            type="file"
+            onChange={selectFile}
+            style={{ marginTop: 10 }}
+          />
           <hr />
           <Button variant="outline-dark" onClick={addInfo}>
             Додати нову властивість
