@@ -2,6 +2,7 @@ import { Container, Row, Col } from "react-bootstrap";
 import TypeBar from "../components/TypeBar";
 import BrandBar from "../components/BrandBar";
 import DeviceList from "../components/DeviceList";
+import Pages from "../components/Pages";
 import { observer } from "mobx-react-lite";
 import { useContext, useEffect } from "react";
 import { Context } from "..";
@@ -14,7 +15,7 @@ const Shop = observer(() => {
     fetchTypes().then((data) => device.setTypes(data));
     fetchBrands().then((data) => device.setBrands(data));
     fetchDevices().then((data) => device.setDevice(data.rows));
-  }, [device]);
+  }, []);
 
   return (
     <Container>
@@ -25,6 +26,7 @@ const Shop = observer(() => {
         <Col md={9}>
           <BrandBar />
           <DeviceList />
+          <Pages />
         </Col>
       </Row>
     </Container>
