@@ -1,12 +1,14 @@
 import { Button, Card, Col, Container, Image, Row } from "react-bootstrap";
 import bigStar from "../assets/bigStar.png";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { fetchOneDevice } from "../http/deviceAPI";
+import { BASKET_ROUTE } from "../utils/consts";
 
 const DevicePage = () => {
   const [device, setDevice] = useState({ info: [] });
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchOneDevice(id).then((data) => setDevice(data));
@@ -52,7 +54,12 @@ const DevicePage = () => {
             }}
           >
             <h5>From: {device.price}</h5>
-            <Button variant="outline-dark">Add to busket</Button>
+            <Button
+              variant="outline-dark"
+              onClick={() => navigate(BASKET_ROUTE)}
+            >
+              Add to basket
+            </Button>
           </Card>
         </Col>
       </div>
