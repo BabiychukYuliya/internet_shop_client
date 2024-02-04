@@ -2,8 +2,9 @@ import { Col, Card, Image } from "react-bootstrap";
 import star from "../assets/star.png";
 import { useNavigate } from "react-router-dom";
 import { DEVICE_ROUTE } from "../utils/consts";
+import { observer } from "mobx-react-lite";
 
-const DeviceItem = ({ device }) => {
+const DeviceItem = observer(({ device }) => {
   const navigate = useNavigate();
 
   return (
@@ -32,6 +33,6 @@ const DeviceItem = ({ device }) => {
       </Card>
     </Col>
   );
-};
+});
 
 export default DeviceItem;
